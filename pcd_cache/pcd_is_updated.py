@@ -21,15 +21,6 @@ def get_min_max():
 
     # Determine the total grid size
 
-    # print(max_x)
-    # print(min_x)
-    # # print(grid_size_x)
-    # print(max_y)
-    # print(min_y)
-    # print(grid_size_y)
-    # total_grid_size = grid_size_x * grid_size_y * grid_size_z
-
-    # print("Total grid size:", total_grid_size)
     return min_x,max_x,min_y,max_y
 
 def load_binary_matrix(filename):
@@ -55,12 +46,12 @@ def load_binary_matrix(filename):
         print("Matrix file not found.")
         return None
 
-def check_location(matrix, x, y):
+def check_location(matrix, x, y,min_x, max_x, min_y, max_y):
     if matrix is not None:
         matrix_size = matrix.shape[0]
 
         # Convert x and y to match the scaled matrix
-        min_x, max_x, min_y, max_y = get_min_max()
+        # min_x, max_x, min_y, max_y = get_min_max()
         x_scaled = int((x - min_x) / (max_x - min_x) * (matrix_size - 1))
         y_scaled = int(abs(y - max_y) / (max_y - min_y) * (matrix_size - 1))
 
@@ -76,7 +67,7 @@ def check_location(matrix, x, y):
         return None
 
 
-def add_is_update_column(csv_filename, matrix):
+def add_is_update_column(csv_filename, matrix,min_x, max_x, min_y, max_y ):
     try:
         updated_rows = []
         with open(csv_filename, "r") as csv_file:
@@ -91,7 +82,8 @@ def add_is_update_column(csv_filename, matrix):
                 x = float(row["X Coordinate"])
                 y = float(row["Y Coordinate"])
 
-                is_update = check_location(matrix, x, y)
+                is_update = check_location(matrix, x, y,min_x, max_x, min_y, max_y )
+                # print("called ")
 
                 updated_rows.append(dict(row, Is_Update=is_update))
 
@@ -113,4 +105,5 @@ matrix_filename = "modified_matrix.txt"
 matrix = load_binary_matrix(matrix_filename)
 
 # Update the CSV file with the Is_Update column
-add_is_update_column("vehicle_coordinates_with_probability.csv", matrix)
+min_x, max_x, min_y, max_y = get_min_max()
+add_is_update_column("vehicle_coordinates_with_probability.csv", matrix,min_x, max_x, min_y, max_y)
