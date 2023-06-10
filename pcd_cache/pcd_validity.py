@@ -26,7 +26,7 @@ def update_validity(csv_filename):
                 if is_update == 1:
                     valid_till = time + np.random.exponential(scale=10)
                 else:
-                    valid_till = float("inf")
+                    valid_till = int("501") #max.simulation time+1
 
                 map_data[tile_name] = {"valid_from": valid_from, "valid_till": valid_till}
 

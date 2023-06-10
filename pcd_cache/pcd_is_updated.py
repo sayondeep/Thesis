@@ -1,6 +1,7 @@
 import csv
 import numpy as np
 from pyntcloud import PyntCloud
+import os
 
 def get_min_max():
     cloud = PyntCloud.from_file("/home/sayon/autoware_map/town01/pointcloud_map.pcd")
@@ -45,6 +46,13 @@ def load_binary_matrix(filename):
     except FileNotFoundError:
         print("Matrix file not found.")
         return None
+    
+
+def extract_numbers_from_filename(filename):
+    base_filename = os.path.basename(filename)
+    parts = base_filename.split('.')[0].split('_')
+    last_two_numbers = tuple(map(int, parts[-2:]))
+    return last_two_numbers
 
 def check_location(matrix, x, y,min_x, max_x, min_y, max_y):
     if matrix is not None:
@@ -67,6 +75,7 @@ def check_location(matrix, x, y,min_x, max_x, min_y, max_y):
         return None
 
 
+
 def add_is_update_column(csv_filename, matrix,min_x, max_x, min_y, max_y ):
     try:
         updated_rows = []
@@ -79,8 +88,12 @@ def add_is_update_column(csv_filename, matrix,min_x, max_x, min_y, max_y ):
             fieldnames = csv_reader.fieldnames + ["Is_Update"]
 
             for row in csv_reader:
-                x = float(row["X Coordinate"])
-                y = float(row["Y Coordinate"])
+                # x = float(row["X Coordinate"])
+                # y = float(row["Y Coordinate"])
+
+                co_or = extract_numbers_from_filename(row["Tile Name"])
+                x = co_or[0]
+                y = co_or[1]
 
                 is_update = check_location(matrix, x, y,min_x, max_x, min_y, max_y )
                 # print("called ")
