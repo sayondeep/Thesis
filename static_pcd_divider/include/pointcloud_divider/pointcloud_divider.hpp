@@ -71,11 +71,16 @@ public:
     return std::pair<double, double>(grid_size_x_, grid_size_y_);
   }
 
-  void run(std::vector<std::string> pcd_names, std::string output_dir, std::string file_prefix,
-           std::string config);
+  // void run(std::vector<std::string> pcd_names, std::string output_dir, std::string file_prefix,
+  //          std::string config);
 
-  void run(const typename pcl::PointCloud<PointT>::Ptr& cloud, std::string output_dir,
-           std::string file_prefix, std::string config);
+  // void run(const typename pcl::PointCloud<PointT>::Ptr& cloud, std::string output_dir,
+  //          std::string file_prefix, std::string config);
+
+  void run(std::vector<std::string> pcd_names, std::string output_dir,
+                                                            std::string file_prefix,double grid_size_x,
+                                                            double grid_size_y,double global_x_low,
+                                                            double global_y_low);
 
   std::string makeFileName(const GridInfo& grid) const;
 
@@ -113,7 +118,9 @@ private:
   void saveMergedPCD();
   void dividePointCloud(const typename pcl::PointCloud<PointT>::Ptr& cloud_ptr);
   void saveGridPCD();
-  void paramInitialize();
+  void paramInitialize(double grid_size_x,double grid_size_y,
+                                                double global_x_low,
+                                                double global_y_low);
   void saveGridInfoToYAML(const std::string& yaml_file_path);
 };
 

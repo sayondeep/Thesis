@@ -8,33 +8,39 @@
 namespace fs = std::filesystem;
 
 template <class PointT>
-void PointCloudDivider<PointT>::run(const typename pcl::PointCloud<PointT>::Ptr& cloud_ptr,
-                                                            std::string output_dir, std::string file_prefix,
-                                                            std::string config)
-{
-  output_dir_ = output_dir;
-  file_prefix_ = file_prefix;
-  config_file_ = config;
+// void PointCloudDivider<PointT>::run(const typename pcl::PointCloud<PointT>::Ptr& cloud_ptr,
+//                                                             std::string output_dir, std::string file_prefix,
+//                                                             std::string config)
+// {
+//   output_dir_ = output_dir;
+//   file_prefix_ = file_prefix;
+//   config_file_ = config;
 
-  grid_set_.clear();
+//   grid_set_.clear();
 
-  paramInitialize();
-  std::cout<<"calling dividePointCloud"<<std::endl;
-  dividePointCloud(cloud_ptr);
-  saveGridPCD();
-  saveMergedPCD();
-}
+//   paramInitialize();
+//   std::cout<<"calling dividePointCloud"<<std::endl;
+//   dividePointCloud(cloud_ptr);
+//   saveGridPCD();
+//   saveMergedPCD();
+// }
 
-template <class PointT>
+//template <class PointT>
+// void PointCloudDivider<PointT>::run(std::vector<std::string> pcd_names, std::string output_dir,
+//                                                             std::string file_prefix, std::string config)
+
+
 void PointCloudDivider<PointT>::run(std::vector<std::string> pcd_names, std::string output_dir,
-                                                            std::string file_prefix, std::string config)
+                                                            std::string file_prefix,double grid_size_x,
+                                                            double grid_size_y,double global_x_low,
+                                                            double global_y_low)
 {
   output_dir_ = output_dir;
   file_prefix_ = file_prefix;
-  config_file_ = config;
+  //config_file_ = config;
 
   grid_set_.clear();
-  paramInitialize();
+  paramInitialize(grid_size_x,grid_size_y,global_x_low, global_y_low);
 
   for (const std::string& pcd_name : pcd_names)
   {
@@ -93,8 +99,8 @@ template <class PointT>
 // }
 GridInfo PointCloudDivider<PointT>::pointToGrid(const Eigen::Vector3f& pos) const
 {
-  int x_id = static_cast<double>(global_x_low_+(std::floor((pos.x()-global_x_low_) / grid_size_x_) * grid_size_x_));
-  int y_id = static_cast<double>(global_y_low_+(std::floor((pos.y()-global_y_low_) / grid_size_y_) * grid_size_y_));
+  int x_id = static_cast<int>(global_x_low_+(std::floor((pos.x()-global_x_low_) / grid_size_x_) * grid_size_x_));
+  int y_id = static_cast<int>(global_y_low_+(std::floor((pos.y()-global_y_low_) / grid_size_y_) * grid_size_y_));
   int gx_id = static_cast<int>(std::floor(pos.x() / g_grid_size_x_) * g_grid_size_x_);
   int gy_id = static_cast<int>(std::floor(pos.y() / g_grid_size_y_) * g_grid_size_y_);
   return GridInfo(x_id, y_id, gx_id, gy_id);
@@ -197,24 +203,37 @@ void PointCloudDivider<PointT>::saveGridPCD()
 }
 
 template <class PointT>
-void PointCloudDivider<PointT>::paramInitialize()
+void PointCloudDivider<PointT>::paramInitialize(double grid_size_x,double grid_size_y,
+                                                double global_x_low,
+                                                double global_y_low)
 {
-  try
-  {
-    YAML::Node conf = YAML::LoadFile(config_file_)["pointcloud_divider"];
-    use_large_grid_ = conf["use_large_grid"].as<bool>();
-    merge_pcds_ = conf["merge_pcds"].as<bool>();
-    leaf_size_ = conf["leaf_size"].as<double>();
-    grid_size_x_ = conf["grid_size_x"].as<double>();
-    grid_size_y_ = conf["grid_size_y"].as<double>();
-    global_x_low_ = conf["global_x_low"].as<double>(); // added for x_low
-    global_y_low_ = conf["global_y_low"].as<double>(); // added for y_low
-  }
-  catch (YAML::Exception& e)
-  {
-    std::cerr << "YAML Error: " << e.what() << std::endl;
-    exit(1);
-  }
+  // try
+  // {
+  //   YAML::Node conf = YAML::LoadFile(config_file_)["pointcloud_divider"];
+  //   use_large_grid_ = conf["use_large_grid"].as<bool>();
+  //   merge_pcds_ = conf["merge_pcds"].as<bool>();
+  //   leaf_size_ = conf["leaf_size"].as<double>();
+  //   grid_size_x_ = conf["grid_size_x"].as<double>();
+  //   grid_size_y_ = conf["grid_size_y"].as<double>();
+  //   global_x_low_ = conf["global_x_low"].as<double>(); // added for x_low
+  //   global_y_low_ = conf["global_y_low"].as<double>(); // added for y_low
+  // }
+  // catch (YAML::Exception& e)
+  // {
+  //   std::cerr << "YAML Error: " << e.what() << std::endl;
+  //   exit(1);
+  // }
+
+  // g_grid_size_x_ = grid_size_x_ * 10;
+  // g_grid_size_y_ = grid_size_y_ * 10;
+
+  // if (merge_pcds_)
+  //   merged_ptr_.reset(new pcl::PointCloud<PointT>);
+
+  grid_size_x_ = grid_size_x;
+  grid_size_y_ = grid_size_y;
+  global_x_low_ = global_x_low; // added for x_low
+  global_y_low_ = global_y_low; // added for y_low
 
   g_grid_size_x_ = grid_size_x_ * 10;
   g_grid_size_y_ = grid_size_y_ * 10;
