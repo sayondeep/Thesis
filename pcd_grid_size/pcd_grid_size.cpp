@@ -46,7 +46,7 @@ std::vector<double> calculateGridSize(const std::string& pcdFilePath)
 
 int main()
 {
-    std::string pcdFilePath = "/home/sayon/autoware_map/town02/pointcloud_map.pcd";
+    std::string pcdFilePath = "/home/sayon/autoware_map/town01/pointcloud_map.pcd";
     std::vector<double> res = calculateGridSize(pcdFilePath);
     std::cout<<res[0]<<std::endl;
     std::cout<<res[1]<<std::endl;
