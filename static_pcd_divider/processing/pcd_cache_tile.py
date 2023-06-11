@@ -1,5 +1,6 @@
 import csv
 
+
 cache_hits=0
 cache_miss=0
 
@@ -88,13 +89,13 @@ def read_data_from_csv(filename):
             data = {
                 'id': row['Tile Name'],
                 # 'life': float(row['Valid_Till']) - int(row['Time']) if row['Valid_Till'] != 'inf' else 100,
-                'time': int(row['Time']),
+                'time': int(float(row['Time'])),
                 'size': float(row['Size']),
                 'p': float(row['Probability']),
                 'valid_till': float(row['Valid_Till'])
 
             }
-            if data['id'] not in Ri.cached_data or int(row['Time']) >= float(Ri.cached_data[data['id']]['valid_till']):
+            if data['id'] not in Ri.cached_data or int(float(row['Time'])) > float(Ri.cached_data[data['id']]['valid_till']):
                 cache_miss+=1
                 Ri.process_data(data)
                 
