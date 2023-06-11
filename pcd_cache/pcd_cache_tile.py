@@ -102,7 +102,7 @@ def read_data_from_csv(filename):
                 cache_hits+=1
 
 # Example usage
-Ri = RSU(200)  # Initialize RSU with remaining cache size of 100
+Ri = RSU(400)  # Initialize RSU with remaining cache size of 100
 
 # # Example data
 # data1 = {'id': 'data1', 'life': 5, 'size': 20}
