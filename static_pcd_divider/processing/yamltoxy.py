@@ -2,6 +2,19 @@ from pyntcloud import PyntCloud
 import csv
 import yaml
 
+pcd_file = "/home/sayon/autoware_map/town01/pointcloud_map.pcd"
+
+
+# Path to your CSV file
+csv_file_path = '/home/sayon/Thesis/static_pcd_divider/processing/vehicle_coordinates.csv'
+# Path to save the new CSV file
+new_csv_file_path = 'modified_file.csv'
+
+yaml_file_path = '/home/sayon/autoware_map/town01/splitted_16/16_metadata.yaml'
+
+tiles_file_path = "/home/sayon/autoware_map/town01/splitted_16/"
+
+matrix_size = 16
 
 def get_pcd_grid_size(file_path):
     # Read the PCD file
@@ -18,7 +31,7 @@ def get_pcd_grid_size(file_path):
 
 # Specify the path to the PCD file
 
-pcd_file = "/home/sayon/autoware_map/town01/pointcloud_map.pcd"
+
 
 # Call the function to get the grid size
 mini,maxi = get_pcd_grid_size(pcd_file)
@@ -28,7 +41,7 @@ mini,maxi = get_pcd_grid_size(pcd_file)
 # print(maxi)
 
 # Path to your YAML file
-yaml_file_path = '/home/sayon/autoware_map/town01/splitted_64/64_metadata.yaml'
+
 
 def convert_coordinates_to_indices(x, y, min_x, max_x, min_y, max_y, matrix_rows, matrix_columns):
     x_scaled = int((x - min_x) / (max_x - min_x) * (matrix_rows - 1))
@@ -48,7 +61,7 @@ min_y = mini[1]
 max_y = maxi[1]
 
 # Get matrix size from the user
-matrix_size = 64
+
 matrix_rows = matrix_size
 matrix_columns = matrix_size
 
@@ -65,12 +78,7 @@ for file_name, coordinates in yaml_data.items():
 
 # print(matrix)
 
-# Path to your CSV file
-csv_file_path = '/home/sayon/Thesis/static_pcd_divider/processing/vehicle_coordinates.csv'
-# Path to save the new CSV file
-new_csv_file_path = 'modified_file.csv'
 
-tiles_file_path = "/home/sayon/autoware_map/town01/splitted_64/"
 
 # Read the CSV file
 data = []

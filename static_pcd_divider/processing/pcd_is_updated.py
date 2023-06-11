@@ -88,20 +88,22 @@ def add_is_update_column(csv_filename, matrix,min_x, max_x, min_y, max_y ):
             fieldnames = csv_reader.fieldnames + ["Is_Update"]
 
             for row in csv_reader:
-                # x = float(row["X Coordinate"])
-                # y = float(row["Y Coordinate"])
+                x = float(row["X Coordinate"])
+                y = float(row["Y Coordinate"])
 
-                if(row["Tile Name"]):
+                # if(row["Tile Name"]):
 
-                    co_or = extract_numbers_from_filename(row["Tile Name"])
+                #     co_or = extract_numbers_from_filename(row["Tile Name"])
                     
-                    x = co_or[0]
-                    y = co_or[1]
+                #     x = co_or[0]
+                #     y = co_or[1]
 
-                    is_update = check_location(matrix, x, y,min_x, max_x, min_y, max_y )
+                #     is_update = check_location(matrix, x, y,min_x, max_x, min_y, max_y )
+                is_update = check_location(matrix, x, y,min_x, max_x, min_y, max_y )
                 
-                else:
-                    is_update = 0
+                # else:
+                #     is_update = 0
+
 
                 updated_rows.append(dict(row, Is_Update=is_update))
 
