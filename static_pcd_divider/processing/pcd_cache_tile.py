@@ -1,6 +1,5 @@
 import csv
 
-
 cache_hits=0
 cache_miss=0
 
