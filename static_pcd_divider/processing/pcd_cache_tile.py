@@ -148,19 +148,44 @@ def get_readings(cache_size):
     cache_hits=0
     cache_miss=0
     Ri = RSU(cache_size)
-    filename = '16_validity_with_size.csv'  # Replace with the actual filename/path
+    filename = 'validity_with_size.csv'  # Replace with the actual filename/path
     read_data_from_csv(Ri,filename)
     print("Cache_hits: ",cache_hits)
     print("Cache_miss: ",cache_miss)
 
     return cache_hits,cache_miss
 
-hits=[]
-miss=[]
+# hits=[]
+# miss=[]
+# for i in range(70, 201, 10):
+#     h,m = get_readings(i)
+#     hits.append(h/9810)
+#     miss.append(m/9810)
+
+# print(hits)
+# print(miss)
+hits = []
+misses = []
+
 for i in range(70, 201, 10):
-    h,m = get_readings(i)
-    hits.append(h)
-    miss.append(m)
+    h, m = get_readings(i)
+    hits.append(h / 9810)
+    misses.append(m / 9810)
+
+# Write hits to a file
+with open('hits.txt', 'a') as f:
+    f.write(' '.join(map(str, hits)) + '\n')
+
+# Write misses to a file
+with open('misses.txt', 'a') as f:
+    f.write('\n'.join(map(str, misses)))
 
 print(hits)
-print(miss)
+print(misses)
+
+
+
+
+
+
+
