@@ -172,13 +172,13 @@ for i in range(70, 201, 10):
     hits.append(h / 9810)
     misses.append(m / 9810)
 
-# Write hits to a file
-with open('hits.txt', 'a') as f:
-    f.write(' '.join(map(str, hits)) + '\n')
+# # Write hits to a file
+# with open('hits_8.txt', 'a') as f:
+#     f.write(' '.join(map(str, hits)) + '\n')
 
-# Write misses to a file
-with open('misses.txt', 'a') as f:
-    f.write('\n'.join(map(str, misses)))
+# # Write misses to a file
+# with open('misses_8.txt', 'a') as f:
+#     f.write(' '.join(map(str, misses))+ '\n')
 
 print(hits)
 print(misses)
