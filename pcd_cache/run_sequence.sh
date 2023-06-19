@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Run the programs in sequence for 100 times
-for ((i=1; i<=10; i++))
+for ((i=1; i<=1; i++))
 do
     echo "Running iteration $i"
 
