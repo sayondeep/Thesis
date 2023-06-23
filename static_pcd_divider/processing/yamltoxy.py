@@ -10,11 +10,11 @@ csv_file_path = '/home/sayon/Thesis/static_pcd_divider/processing/vehicle_coordi
 # Path to save the new CSV file
 new_csv_file_path = 'modified_file.csv'
 
-yaml_file_path = '/home/sayon/autoware_map/town01/splitted_64/64_metadata.yaml'
+matrix_size = 32
 
-tiles_file_path = "/home/sayon/autoware_map/town01/splitted_64/"
+yaml_file_path = '/home/sayon/autoware_map/town01/splitted_' + str(matrix_size) + '/' + str(matrix_size) + '_metadata.yaml'
 
-matrix_size = 64
+tiles_file_path = "/home/sayon/autoware_map/town01/splitted_" + str(matrix_size) + "/"
 
 def get_pcd_grid_size(file_path):
     # Read the PCD file

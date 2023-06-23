@@ -1,6 +1,6 @@
 # Read hits.txt into a list of lists
 hits_list = []
-with open('hits_8.txt', 'r') as f:
+with open('/home/sayon/Thesis/static_pcd_divider/processing/50_mbps/hits_64.txt', 'r') as f:
     for line in f:
         # Split the line by whitespace and convert each value to float
         hits_list.append([float(value) for value in line.split()])

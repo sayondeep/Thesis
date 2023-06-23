@@ -10,7 +10,7 @@ def calculate_data_value(data,curr_time):
     life = data['valid_till']- curr_time
     size = data['size']  # Size of the data
     
-    value = p * life * (size/(6.25 * 10**6))
+    value = p * life * (size/(3.125 * 10**6))
     return value
 
 
