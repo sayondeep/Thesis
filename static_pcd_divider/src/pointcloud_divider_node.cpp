@@ -1,8 +1,8 @@
 #include <pointcloud_divider/pointcloud_divider.hpp>
 
 std::string pcd_file = "/home/sayon/autoware_map/town01/pointcloud_map.pcd";
-std::string output_dir = "/home/sayon/autoware_map/town01/splitted_128/";
-int grid_size = 128;
+std::string output_dir = "/home/sayon/autoware_map/town01/splitted_2/";
+int grid_size = 2;
 
 void printInvalidArguments()
 {

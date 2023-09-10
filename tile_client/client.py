@@ -15,7 +15,8 @@ while True:
     y = float(input("Enter Y: "))
 
     # Send the location details to the server
-    client_socket.sendall(struct.pack('dd', x, y))
+    #client_socket.sendall(struct.pack('dd', x, y))
+    client_socket.send(struct.pack('dd', x, y))
 
     # Receive the tile info from the server
     tile_info = client_socket.recv(1024).decode()
